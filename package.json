@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.html",
   "scripts": {
-  "start": "npx serve -s Public"
-},
+    "start": "npx serve -s Public"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
