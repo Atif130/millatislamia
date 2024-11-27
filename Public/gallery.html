@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gallery - Madarsa Millat Islamia</title>
+    <link rel="stylesheet" href="/Style/style.css">
+    <style>
+        /* Gallery Page Specific Styles */
+        .gallery-hero {
+            height: 40vh;
+            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('gallery-hero.jpg');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+        }
+
+        .gallery-hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            animation: fadeInDown 1s ease;
+        }
+
+        .gallery-section {
+            padding: 80px 0;
+            background: #f9f9f9;
+        }
+
+        .gallery-filters {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .filter-btn {
+            padding: 10px 20px;
+            background: white;
+            border: 2px solid #4CAF50;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .filter-btn:hover,
+        .filter-btn.active {
+            background: #4CAF50;
+            color: white;
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+            padding: 0 20px;
+        }
+
+        .gallery-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .gallery-item:hover {
+            transform: scale(1.05);
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .gallery-item:hover img {
+            transform: scale(1.1);
+        }
+
+        .gallery-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .gallery-item:hover .gallery-overlay {
+            opacity: 1;
+        }
+
+        .gallery-overlay i {
+            color: white;
+            font-size: 2rem;
+        }
+
+        /* Lightbox Styles */
+        #lightbox {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.9);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .lightbox-content {
+            max-width: 90%;
+            max-height: 90%;
+            position: relative;
+        }
+
+        .lightbox-image {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
+
+        .lightbox-close {
+            position: absolute;
+            top: -40px;
+            right: 0;
+            color: white;
+            font-size: 2rem;
+            cursor: pointer;
+        }
+
+        .lightbox-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            color: white;
+            font-size: 2rem;
+            cursor: pointer;
+            background: rgba(0,0,0,0.5);
+            padding: 10px;
+        }
+
+        .lightbox-prev {
+            left: -50px;
+        }
+
+        .lightbox-next {
+            right: -50px;
+        }
+
+        /* Responsive Adjustments */
+        @media (max-width: 768px) {
+            .gallery-grid {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            }
+
+            .lightbox-nav {
+                position: fixed;
+                top: 50%;
+                transform: translateY(-50%);
+            }
+
+            .lightbox-prev {
+                left: 10px;
+            }
+
+            .lightbox-next {
+                right: 10px;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Header (Same as index.html) -->
+    <header>
+        <div class="logo">
+            <img src="/images/logo.png" alt="Madarsa Logo">
+            <h1>Madarsa Millat Islamia Kathaliya | مدرسہ ملّت اسلامیہ کٹھلیا</h1>
+        </div>
+        <div class="menu-btn">
+            <i class="fas fa-bars"></i>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About Us</a></li>
+                <li class="dropdown">
+                    <a href="courses.html">Courses <i class="fas fa-chevron-down"></i></a>
+                    <ul class="dropdown-content">
+                        <li><a href="qc.html">Quran Course</a></li>
+                        <li><a href="uc.html">Urdu Course</a></li>
+                        <li><a href="ac.html">Arabic Course</a></li>
+                        <li><a href="is.html">Islamic Studies</a></li>
+                    </ul>
+                </li>
+                <li><a href="gallery.html">Gallery</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+        </nav>
+        <!-- Your header content -->
+    </header>
+
+    <!-- Gallery Hero Section -->
+    <h1>|</h1>
+    <h1>|</h1>
+    <section class="gallery-hero">
+        <div class="container">
+            <h1 data-aos="fade-up">Our Gallery</h1>
+            <p data-aos="fade-up" data-aos-delay="200">Moments of Learning and Growth</p>
+        </div>
+    </section>
+
+    <!-- Gallery Section -->
+    <section class="gallery-section">
+        <div class="container">
+            <!-- Gallery Filters -->
+            <div class="gallery-filters" data-aos="fade-up">
+                <button class="filter-btn active" data-filter="all">All Photos</button>
+                <button class="filter-btn" data-filter="events">Events</button>
+                <button class="filter-btn" data-filter="classes">Classes</button>
+                <button class="filter-btn" data-filter="activities">Activities</button>
+                <button class="filter-btn" data-filter="students">Students</button>
+            </div>
+
+            <!-- Gallery Grid -->
+            <div class="gallery-grid">
+                <!-- Event Images -->
+                <div class="gallery-item" data-category="events" data-aos="fade-up">
+                    <img src="/images/image_1.jpg" alt="Event 1">
+                    <div class="gallery-overlay">
+                        <i class="fas fa-search-plus"></i>
+                    </div>
+                </div>
+                <div class="gallery-item" data-category="events" data-aos="fade-up" data-aos-delay="100">
+                    <img src="/images/mah_3.jpg" alt="Event 2">
+                    <div class="gallery-overlay">
+                        <i class="fas fa-search-plus"></i>
+                    </div>
+                </div>
+
+                <!-- Class Images -->
+                <div class="gallery-item" data-category="classes" data-aos="fade-up">
+                    <img src="/images/meh_2.jpg" alt="Class 1">
+                    <div class="gallery-overlay">
+                        <i class="fas fa-search-plus"></i>
+                    </div>
+                </div>
+                <div class="gallery-item" data-category="classes" data-aos="fade-up" data-aos-delay="100">
+                    <img src="/images/mah_3.jpg" alt="Class 2">
+                    <div class="gallery-overlay">
+                        <i class="fas fa-search-plus"></i>
+                    </div>
+                </div>
+
+                <!-- Activities Images -->
+                <div class="gallery-item" data-category="activities" data-aos="fade-up">
+                    <img src="/images/image_1.jpg" alt="Activity 1">
+                    <div class="gallery-overlay">
+                        <i class="fas fa-search-plus"></i>
+                    </div>
+                </div>
+                <div class="gallery-item" data-category="activities" data-aos="fade-up" data-aos-delay="100">
+                    <img src="/images/mah_3.jpg" alt="Activity 2">
+                    <div class="gallery-overlay">
+                        <i class="fas fa-search-plus"></i>
+                    </div>
+                </div>
+
+                <!-- Students Images -->
+                <div class="gallery-item" data-category="students" data-aos="fade-up">
+                    <img src="/images/meh_2.jpg" alt="Student 1">
+                    <div class="gallery-overlay">
+                        <i class="fas fa-search-plus"></i>
+                    </div>
+                </div>
+                <div class="gallery-item" data-category="students" data-aos="fade-up" data-aos-delay="100">
+                    <img src="/images/mah_3.jpg" alt="Student 2">
+                    <div class="gallery-overlay">
+                        <i class="fas fa-search-plus"></i>
+                    </div>
+                </div>
+
+                <!-- Add more gallery items as needed -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Lightbox -->
+    <div id="lightbox">
+        <div class="lightbox-content">
+            <span class="lightbox-close" onclick="closeLightbox()">&times;</span>
+            <img src="" alt="Lightbox Image" class="lightbox-image">
+            <div class="lightbox-nav lightbox-prev" onclick="changeImage(-1)">
+                <i class="fas fa-chevron-left"></i>
+            </div>
+            <div class="lightbox-nav lightbox-next" onclick="changeImage(1)">
+                <i class="fas fa-chevron-right"></i>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer (Same as index.html) -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <img src="/images/logo.png" alt="Madarsa Logo">
+                    <h3>Madarsa Millat Islamia Kathaliya | مدرسہ ملّت اسلامیہ کٹھلیا</h3>
+                </div>
+                <div class="footer-links">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="about.html">About</a></li>
+                        <li><a href="courses.html">Courses</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-social">
+                    <h4>Follow Us</h4>
+                    <div class="social-icons">
+                        <a href="https://facebook.com"><i class="fab fa-facebook"></i></a>
+                        <a href="https://twitter.com"><i class="fab fa-twitter"></i></a>
+                        <a href="https://google.com"><i class="fab fa-instagram"></i></a>
+                        <a href="https://youtube.com"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Madarsa Millat Islamia. All Rights Reserved.</p>
+            </div>
+        </div>
+        <!-- Your footer content -->
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        // Initialize AOS
+        AOS.init({
+            duration: 1000,
+            once: true
+        });
+
+        // Gallery Filter
+        const filterBtns = document.querySelectorAll('.filter-btn');
+        const galleryItems = document.querySelectorAll('.gallery-item');
+
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                // Remove active class from all buttons
+                filterBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+
+                // Filter gallery items
+                const filter = btn.dataset.filter;
+                galleryItems.forEach(item => {
+                    if (filter === 'all' || item.dataset.category === filter) {
+                        item.style.display = 'block';
+                    } else {
+                        item.style.display = 'none';
+                    }
+                });
+            });
+        });
+
+        // Lightbox Variables
+        const lightbox = document.getElementById('lightbox');
+        const lightboxImage = document.querySelector('.lightbox-image');
+        let currentImageIndex = 0;
+        let lightboxImages = [];
+
+        // Open Lightbox
+        function openLightbox(img) {
+            lightbox.style.display = 'flex';
+            lightboxImage.src = img.src;
+            
+            // Collect all visible gallery images
+            lightboxImages = Array.from(document.querySelectorAll('.gallery-item:not([style*="display: none"])'))
+                .map(item => item.querySelector('img'));
+            
+            // Find current image index
+            currentImageIndex = lightboxImages.findIndex(image => image.src === img.src);
+        }
+
+        // Close Lightbox
+        function closeLightbox() {
+            lightbox.style.display = 'none';
+        }
+
+        // Change Image in Lightbox
+        function changeImage(direction) {
+            currentImageIndex += direction;
+            
+            // Loop through images
+            if (currentImageIndex >= lightboxImages.length) {
+                currentImageIndex = 0;
+            } else if (currentImageIndex < 0) {
+                currentImageIndex = lightboxImages.length - 1;
+            }
+
+            lightboxImage.src = lightboxImages[currentImageIndex].src;
+        }
+
+        // Add click event to all gallery items
+        document.querySelectorAll('.gallery-item').forEach(item => {
+            item.addEventListener('click', function() {
+                const img = this.querySelector('img');
+                openLightbox(img);
+            });
+        });
+
+        // Close lightbox when clicking outside the image
+        lightbox.addEventListener('click', function(e) {
+            if (e.target === lightbox) {
+                closeLightbox();
+            }
+        });
+
+        // Close lightbox with Escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && lightbox.style.display === 'flex') {
+                closeLightbox();
+            }
+
+            // Navigate with arrow keys
+            if (lightbox.style.display === 'flex') {
+                if (e.key === 'ArrowRight') {
+                    changeImage(1);
+                } else if (e.key === 'ArrowLeft') {
+                    changeImage(-1);
+                }
+            }
+        });
+    </script>
+</body>
+</html>
